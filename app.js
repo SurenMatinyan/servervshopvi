@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/", authorization);
 app.use('/users', usersRouter);
-app.use("/product", productRouter);
+app.use("/products", productRouter);
 
 module.exports = app;
 

@@ -5,8 +5,13 @@ const jwt = require('jsonwebtoken');
 
 class product {
     static async getProduct(req, res){
-        //tox beri padkategoryaner@ 
+       const { page }  = req.query;
+       let skip = 1;
+       page == 1 ? skip = 0 : skip = (5 * page) - 5;
+       const getProduct = await productModel.find().skip(skip).limit(5);
+       res.json(getProduct);
     }
+
 
 
     static async createProduct(req, res){
@@ -20,10 +25,6 @@ class product {
        // const newProduct = await productModel.create(req.body);
     }
 
-
-    static async updateProduct(req, res){
-         await productModel(req.body);
-    }
 }
 
 
