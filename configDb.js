@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const url = "mongodb://localhost:27017/DB"
+const url = "mongodb+srv://example:example123@cluster0.mp4bd.mongodb.net/shop?authSource=admin&replicaSet=atlas-4kvxp2-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
 
 const connect = mongoose.connect(url, {
     useNewUrlParser: true,

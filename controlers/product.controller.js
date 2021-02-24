@@ -1,7 +1,7 @@
 const productModel = require("../models/product.model");
 const jwt = require('jsonwebtoken');
 
-
+//
 
 class product {
     static async getProduct(req, res){
@@ -12,7 +12,11 @@ class product {
        res.json(getProduct);
     }
 
-
+    static async getProductItem(req, res){
+       const itemId = req.query.id; 
+       const getItem = await productModel.findOne({_id: itemId});
+       res.json(getItem);
+    }
 
     static async createProduct(req, res){
        if(req.body.category){
