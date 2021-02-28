@@ -7,6 +7,7 @@ const ProductModel = new Schema({
     price: Number,
     comment: String,
     color: String,
+    imgURL: String,
     category: String, 
 
 });

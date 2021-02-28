@@ -1,6 +1,8 @@
 const productModel = require("../models/product.model");
 const jwt = require('jsonwebtoken');
-
+const fs = require("fs");
+const { IncomingForm } = require('formidable');
+const uniqid = require('uniqid');
 //
 
 class product {
@@ -19,15 +21,22 @@ class product {
     }
 
     static async createProduct(req, res){
-       if(req.body.category){
-        const newPorduct = await productModel.create(req.body);
-        
-        console.log(newPorduct);
-        return res.json({message: "create new product"});
-
-       }
-       // const newProduct = await productModel.create(req.body);
-    }
+      const form = new IncomingForm();
+      const n =  form.parse(req, (err, fields, files) => {
+         const imgurl = "./public/images/" + uniqid() + ".jpg";
+         const data = { ...fields, imgURL: imgurl.slice(1)}
+         fs.rename(files.imgURL.path, imgurl, err => { err ? err.message : null });
+         async function n(data){
+            const newPorduct = await productModel.create(data);
+         }
+         n(data);
+         
+       });
+       res.send("created");
+     
+   }
+     
+   
 
 }
 
@@ -36,3 +45,13 @@ class product {
 
 
 module.exports = product;
+
+
+ // if(req.body.category){
+         
+        //
+        
+        //console.log(newPorduct);
+       // return res.json({message: "create new product"});
+
+      // }
