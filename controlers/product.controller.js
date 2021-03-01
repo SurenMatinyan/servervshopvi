@@ -25,7 +25,7 @@ class product {
       const n =  form.parse(req, (err, fields, files) => {
          const uniq = uniqid();
          const imgurl = `./public/images/${uniq}.jpg`;
-         const data = { ...fields, imgURL: `/images/${uniq}`}
+         const data = { ...fields, imgURL: `/images/${uniq}.jpg`}
          fs.rename(files.imgURL.path, imgurl, err => { err ? err.message : null });
          async function n(data){
             const newPorduct = await productModel.create(data);
