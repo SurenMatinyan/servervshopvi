@@ -9,8 +9,8 @@ class product {
     static async getProduct(req, res){
        const { page }  = req.query;
        let skip = 1;
-       page == 1 ? skip = 0 : skip = (5 * page) - 5;
-       const getProduct = await productModel.find().skip(skip).limit(5);
+       page == 1 ? skip = 0 : skip = (15 * page) - 15;
+       const getProduct = await productModel.find().skip(skip).limit(15);
        res.json(getProduct);
     }
 
