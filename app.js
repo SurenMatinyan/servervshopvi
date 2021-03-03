@@ -7,7 +7,6 @@ require("./configDb");
 
 //const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const authorization = require("./routes/auth");
 const productRouter = require("./routes/product");
 const auth = require('./middlewares/auth');
 
@@ -25,7 +24,6 @@ app.use(cookieParser());
 
 //app.use('/', indexRouter);
 app.use('/', auth);
-app.use("/", authorization);
 app.use('/users', usersRouter);
 app.use("/products", productRouter);
 
