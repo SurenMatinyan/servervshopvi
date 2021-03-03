@@ -9,7 +9,7 @@ class userAuthorization{
             const user = await userModel.findOne({email: email});
             if(user && user.password === password){
                 const token = jwt.sign({ email: user.email, name: user.name }, key);
-                return res.json({status: 0, token});
+                return res.json({status: 0, token, user});
             }
             return res.status(400).json({message: "incorrect email or password"});
         } 
