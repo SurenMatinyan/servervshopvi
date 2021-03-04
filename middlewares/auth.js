@@ -10,7 +10,8 @@ async function auth (req, res, next) {
             if(decoded){
               const user = await users.findOne({email: decoded.email});
               if (user) {
-                req.user = decoded;
+                const veri = {...decoded, status: 0}
+                req.user = veri;
                 return next();
               }
             }
