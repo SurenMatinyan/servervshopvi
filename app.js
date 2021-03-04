@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 
 //app.use('/', indexRouter);
-app.use('/', auth);
+
 app.use('/users', usersRouter);
 app.use("/products", productRouter);
 

@@ -11,7 +11,7 @@ class product {
        let skip = 1;
        page == 1 ? skip = 0 : skip = (15 * page) - 15;
        const getProduct = await productModel.find().skip(skip).limit(15);
-       res.json(getProduct);
+       res.json({getProduct});
     }
 
     static async getProductItem(req, res){

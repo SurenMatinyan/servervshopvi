@@ -17,7 +17,7 @@ class userAuthorization{
     }
 
     static async signup (req, res){
-        const { name, lastname, email, password } = req.body;
+        const { name, email} = req.user;
         const checkEmail = await userModel.findOne({email: email});
         if(checkEmail) {
             return res.status(400).json({message: "this email already exists"});
