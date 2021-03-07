@@ -6,7 +6,7 @@ const authentication = require('../middlewares/auth');
 
 router.post("/login", userController.login);
 
-router.post("/signup", authentication, userController.signup);
+router.post("/signup", userController.signup);
 
 router.get('/auth', authentication, (req, res) =>{
     const userAuth = req.user;
