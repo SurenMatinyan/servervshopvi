@@ -27,7 +27,7 @@ class userAuthorization{
             const newUser = await userModel.create({name, lastname, email, mobile, password});
             return res.json("you create new users");
         }
-        return res.json("you did not fill in the entire field");
+        return res.json({message: "you did not fill in the entire field"});
     }
 }
 
