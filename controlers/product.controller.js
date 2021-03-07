@@ -15,7 +15,7 @@ class product {
     }
 
     static async getProductItem(req, res){
-       const itemId = req.params.id; 
+       const itemId = req.query.id; 
        const getItem = await productModel.findOne({_id: itemId});
        res.json(getItem);
     }
