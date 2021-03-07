@@ -17,14 +17,17 @@ class userAuthorization{
     }
 
     static async signup (req, res){
-        const { name, email} = req.user;
-        const checkEmail = await userModel.findOne({email: email});
-        if(checkEmail) {
+        const { name, lastname, email, mobile, password} = req.body;
+        const checkEmail = await userModel.findOne({email});
+        const checkMobile = await userModel.findOne({mobile})
+        if(checkEmail || checkMobile) {
             return res.status(400).json({message: "this email already exists"});
         }
-        if(name && lastname && email && password){
-            const newUser = await userModel.create(req.body);
+        if(name && lastname && email && password && mobile){
+            const newUser = await userModel.create({name, lastname, email, mobile, password});
+            return res.json("you create new users");
         }
+        return res.send("you did not fill in the entire field");
     }
 }
 

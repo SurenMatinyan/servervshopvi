@@ -15,9 +15,13 @@ class product {
     }
 
     static async getProductItem(req, res){
-       const itemId = req.query.id; 
+       const itemId = req.params.id; 
        const getItem = await productModel.findOne({_id: itemId});
        res.json(getItem);
+    }
+
+    static async getProductCategory(req, res){
+       const { id } = req.params
     }
 
     static async createProduct(req, res){

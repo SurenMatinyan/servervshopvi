@@ -10,6 +10,8 @@ router.get('/item', productController.getProductItem);
 
 router.post("/", productController.createProduct);
 
+router.get('/category', productController)
+
 
 module.exports = router;
 
