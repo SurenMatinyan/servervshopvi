@@ -12,7 +12,7 @@ class product {
          const category =  req.params.category;
          const  page  = req.query.page || "1";
          let skip = 1;
-         const limit = 3;
+         const limit = 15;
          page == 1 ? skip = 0 : skip =  (limit * page) - limit;
          const caunt = await productModel.countDocuments({category});
          const getProduct = await productModel.find({category}).skip(skip).limit(limit);
