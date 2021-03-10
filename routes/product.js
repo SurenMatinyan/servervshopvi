@@ -10,7 +10,7 @@ router.get('/:category', productController.getProduct);
 
 router.get('/children', productController.getProduct);
 
-router.get('/item', productController.getProductItem);
+router.get('/item/:id', productController.getProductItem);
 
 router.post("/", productController.createProduct);
 
