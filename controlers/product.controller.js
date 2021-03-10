@@ -7,11 +7,22 @@ const uniqid = require('uniqid');
 
 class product {
     static async getProduct(req, res){
-       const { page }  = req.query;
-       let skip = 1;
-       page == 1 ? skip = 0 : skip = (15 * page) - 15;
-       const getProduct = await productModel.find().skip(skip).limit(15);
-       res.json(getProduct);
+
+       try{
+         const category =  req.params.category;
+         const  page  = req.query.page || "1";
+         let skip = 1;
+         const limit = 3;
+         page == 1 ? skip = 0 : skip =  (limit * page) - limit;
+         const caunt = await productModel.countDocuments({category});
+         const getProduct = await productModel.find({category}).skip(skip).limit(limit);
+         res.json({ status: 0,  caunt, getProduct });
+       }
+       catch(err){
+         console.log(err.message);
+         res.json({status: 1, message: "error 500"});
+       }
+       
     }
 
     static async getProductItem(req, res){
@@ -20,13 +31,10 @@ class product {
        res.json(getItem);
     }
 
-    static async getProductCategory(req, res){
-       const { id } = req.params
-    }
 
     static async createProduct(req, res){
       const form = new IncomingForm();
-      const n =  form.parse(req, (err, fields, files) => {
+      const n = form.parse(req, (err, fields, files) => {
          const uniq = uniqid();
          const imgurl = `./public/images/${uniq}.jpg`;
          const data = { ...fields, imgURL: `/images/${uniq}.jpg`}
@@ -44,18 +52,10 @@ class product {
 
 }
 
-
+/**/
  
 
 
 module.exports = product;
 
 
- // if(req.body.category){
-         
-        //
-        
-        //console.log(newPorduct);
-       // return res.json({message: "create new product"});
-
-      // }

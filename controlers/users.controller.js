@@ -1,6 +1,7 @@
 const userModel = require('../models/users.model');
 const jwt = require('jsonwebtoken');
 const key = "s871uiv./zxc9;.,12ew,ads.zxc.###%"
+const bcrypt = require("bcrypt");
 
 class userAuthorization{
     static async login(req, res){
@@ -19,12 +20,13 @@ class userAuthorization{
     static async signup (req, res){
         const { name, lastname, email, mobile, password} = req.body;
         const checkEmail = await userModel.findOne({email});
-        const checkMobile = await userModel.findOne({mobile})
+        const checkMobile = await userModel.findOne({mobile});
         if(checkEmail || checkMobile) {
             return res.status(400).json({message: "this email already exists"});
         }
         if(name && lastname && email && password && mobile){
-            const newUser = await userModel.create({name, lastname, email, mobile, password});
+            const hashPass = await bcrypt.hash(password, 12);
+            const newUser = await userModel.create({name, lastname, email, mobile, password: hashPass});
             return res.json("you create new users");
         }
         return res.json({message: "you did not fill in the entire field"});

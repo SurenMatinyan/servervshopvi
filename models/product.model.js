@@ -8,8 +8,7 @@ const ProductModel = new Schema({
     comment: String,
     color: String,
     imgURL: String,
-    category: String, 
-
+    category: [],
 });
 
 module.exports = mongoose.model('Product', ProductModel);
