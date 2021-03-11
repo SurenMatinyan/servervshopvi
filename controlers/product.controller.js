@@ -48,12 +48,18 @@ class product {
        res.send("created");
      
    }
+
+   static async getNewsProduct(req, res){
+      const newsMan = await productModel.find({category: "man"}).limit(5);
+      const newsWoman = await productModel.find({category: "woman"}).limit(5);
+      const newsChildren = await productModel.find({category: "children"}).limit(5);
+      res.json({status: 0, newsMan, newsWoman, newsChildren});
+   }
      
    
 
 }
 
-/**/
  
 
 
