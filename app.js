@@ -9,6 +9,7 @@ require("./configDb");
 const usersRouter = require('./routes/users');
 const productRouter = require("./routes/product");
 const auth = require('./middlewares/auth');
+const transactionRouter = require('./routes/transaction');
 
 const app = express();
 app.listen(5050);
@@ -19,8 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
-app.use('/users', usersRouter);
-app.use("/products", productRouter);
+app.use('/api/transaction', auth, transactionRouter);
+app.use('/api/users', usersRouter);
+app.use("/api/products", productRouter);
 
 
 module.exports = app;

@@ -8,7 +8,8 @@ class userAuthorization{
         const { email, password }  = req.body;
         if(email && password){
             const user = await userModel.findOne({email: email});
-            if(user && user.password === password){
+            const match = await bcrypt.compare(password, user.password);
+            if(user && match){
                 const token = jwt.sign({ email: user.email, name: user.name }, key);
                 return res.json({status: 0, token, user});
             }
