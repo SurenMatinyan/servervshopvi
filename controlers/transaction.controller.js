@@ -11,8 +11,8 @@ class transaction {
     static async getTransaction(req, res){
         const { user } = req;
         const check = await usersModel.findOne({email: user.email}).populate({path: 'products.basket'});
-        console.log(check.products.basket);
-        res.status(200).json(check)
+        const { products } = check
+        res.status(200).json(products)
     }
 
 /*
