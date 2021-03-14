@@ -9,9 +9,8 @@ const UserModel = new Schema({
     mobile: Number,
     password: String,
     balanse: Number,
-    products: {
-        basket: [{type: Schema.Types.ObjectId, ref: "Product"}],
-    },
+    basket: [{type: Schema.Types.ObjectId, ref: "Product"}],
+
 });
 
 module.exports = mongoose.model('User', UserModel);

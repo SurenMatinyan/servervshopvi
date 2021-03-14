@@ -4,15 +4,15 @@ const productModel = require("../models/product.model");
 class transaction {
     static async addBasket(req, res){
         const { _id } = req.body;
-        const addBasketProduct = await usersModel.findOneAndUpdate({email: req.user.email}, {products: {basket: _id}});
+        const addBasketProduct = await usersModel.findOneAndUpdate({email: req.user.email}, {$push: {basket: _id}});
         res.status(200).json({status: 0, message: "product added to cart"})
     }
 
     static async getTransaction(req, res){
         const { user } = req;
-        const check = await usersModel.findOne({email: user.email}).populate({path: 'products.basket'});
-        const { products } = check
-        res.status(200).json(products)
+        const check = await usersModel.findOne({email: user.email}).populate({path: 'basket'});
+        const { basket } = check
+        res.status(200).json(basket)
     }
 
 /*
