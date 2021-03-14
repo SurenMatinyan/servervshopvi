@@ -9,7 +9,9 @@ const UserModel = new Schema({
     mobile: Number,
     password: String,
     balanse: Number,
-    basket: [{type: Schema.Types.ObjectId, ref: "Product"}],
+    products: {
+        basket: [{type: Schema.Types.ObjectId, ref: "Product"}],
+    }
 
 });
 
