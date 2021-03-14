@@ -19,7 +19,7 @@ class transaction {
         const { user } = req;
         const{ id } = req.params;
         const check = await usersModel.updateOne({email: user.email}, { $pull: {'products.basket': id }});
-        res.json({message: "delete"});
+        res.status(200).json({status: 0, message: "delete"});
     }
 
 /*
