@@ -5,7 +5,7 @@ const transactionController = require('../controlers/transaction.controller');
 
 
 
-router.put('/basket', transactionController.addBasket);
+router.patch('/basket', transactionController.addBasket);
 
 router.get('/basket', transactionController.getTransaction);
 
