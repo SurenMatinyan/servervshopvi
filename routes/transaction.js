@@ -9,4 +9,6 @@ router.patch('/basket', transactionController.addBasket);
 
 router.get('/basket', transactionController.getTransaction);
 
+router.delete('/basket/:id', transactionController.deleteBasket);
+
 module.exports = router;
