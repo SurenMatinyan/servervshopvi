@@ -4,8 +4,7 @@ const productModel = require("../models/product.model");
 class transaction {
     static async addBasket(req, res){
         const { _id, qyt } = req.body;
-        const checkInBasket = await usersModel.findOne({email: req.user.email, 'products.basket': {_id}})
-        console.log("krknvel E", checkInBasket);
+        //  const checkInBasket = await usersModel.findOne({email: req.user.email, 'products.basket': {_id}})
         const addBasketProduct = await usersModel.updateOne({email: req.user.email}, {$push: {'products.basket': {_id, quantity: qyt||1}} });
         res.status(200).json({status: 0, message: "product added to cart"})
     }
