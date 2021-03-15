@@ -3,22 +3,25 @@ const productModel = require("../models/product.model");
 
 class transaction {
     static async addBasket(req, res){
-        const { _id } = req.body;
-        const addBasketProduct = await usersModel.updateOne({email: req.user.email}, {$push: {'products.basket': _id}});
+        const { _id, qyt } = req.body;
+        const checkInBasket = await usersModel.findOne({email: req.user.email, 'products.basket': {_id}})
+        console.log("krknvel E", checkInBasket);
+        const addBasketProduct = await usersModel.updateOne({email: req.user.email}, {$push: {'products.basket': {_id, quantity: qyt||1}} });
         res.status(200).json({status: 0, message: "product added to cart"})
     }
 
     static async getTransaction(req, res){
         const { user } = req;
-        const check = await usersModel.findOne({email: user.email}).populate({path: 'products.basket'});
+        const check = await usersModel.findOne({email: user.email}).populate({path: 'products.basket._id', model: "Product"});
         const { products } = check
+        console.log(products.basket);
         res.status(200).json(products)
     }
 
     static async deleteBasket(req, res){
         const { user } = req;
         const{ id } = req.params;
-        const check = await usersModel.updateOne({email: user.email}, { $pull: {'products.basket': id }});
+        const check = await usersModel.updateOne({email: user.email}, { $pull: { "products.basket": { _id: id } }  });
         res.status(200).json({status: 0, message: "delete"});
     }
 

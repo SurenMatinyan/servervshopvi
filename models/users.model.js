@@ -10,7 +10,7 @@ const UserModel = new Schema({
     password: String,
     balanse: Number,
     products: {
-        basket: [{type: Schema.Types.ObjectId, ref: "Product"}],
+        basket: [{item: {type: Schema.Types.ObjectId, ref: "Product"}, quantity: { type: Number, default: 1 }}],
     }
 
 });
