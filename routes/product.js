@@ -4,7 +4,6 @@ const productController = require("../controlers/product.controller");
 
 
 
-router.get('/', productController.getProduct);
 
 router.get('/news', productController.getNewsProduct);
 

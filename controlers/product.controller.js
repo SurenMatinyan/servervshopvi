@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const fs = require("fs");
 const { IncomingForm } = require('formidable');
 const uniqid = require('uniqid');
+
 //
 
 class product {
@@ -10,12 +11,15 @@ class product {
 
        try{
          const category =  req.params.category;
-         const  page  = req.query.page || "1";
+         const { page, child, priceMin, priceMax }= req.query;
+         const pat = [category];
+         child && pat.push(child);
+         const find = {category: pat, price: {$gte: priceMin || 0, $lte: priceMax || 999999} }
          let skip = 1;
          const limit = 15;
          page == 1 ? skip = 0 : skip =  (limit * page) - limit;
-         const caunt = await productModel.countDocuments({category});
-         const getProduct = await productModel.find({category}).skip(skip).limit(limit);
+         const caunt = await productModel.countDocuments(find);
+         const getProduct = await productModel.find(find).skip(skip).limit(limit);
          res.json({ status: 0,  caunt, getProduct });
        }
        catch(err){
