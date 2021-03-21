@@ -4,11 +4,10 @@ const fs = require("fs");
 const { IncomingForm } = require('formidable');
 const uniqid = require('uniqid');
 
-//
+
 
 class product {
     static async getProduct(req, res){
-
        try{
          const category =  req.params.category;
          const { page, child, priceMin, priceMax }= req.query;
@@ -20,34 +19,51 @@ class product {
          page == 1 ? skip = 0 : skip =  (limit * page) - limit;
          const caunt = await productModel.countDocuments(find);
          const getProduct = await productModel.find(find).skip(skip).limit(limit);
-         res.json({ status: 0,  caunt, getProduct });
+         console.log(getProduct)
+         res.status(200).json({ status: 0,  caunt, getProduct });
        }
        catch(err){
          console.log(err.message);
-         res.json({status: 1, message: "error 500"});
+         res.status(500).json({status: 1, message: "error 500"});
        }
        
     }
 
     static async getProductItem(req, res){
-       console.log("req")
        const itemId = req.params.id; 
        const getItem = await productModel.findOne({_id: itemId});
-       res.json(getItem);
+       res.status(200).json(getItem);
     }
 
 
     static async createProduct(req, res){
+       
       const form = new IncomingForm();
-      const n = form.parse(req, (err, fields, files) => {
-         const uniq = uniqid();
-         const imgurl = `./public/images/${uniq}.jpg`;
-         const data = { ...fields, imgURL: `/images/${uniq}.jpg`}
-         fs.rename(files.imgURL.path, imgurl, err => { err ? err.message : null });
-         async function n(data){
+      form.multiples = true
+     
+
+      const n = form.parse(req, async (err, fields, files) => {
+         
+         if( fields && files  ){
+            const imgArr = [];
+            const imgIconArr = [];
+            files.img.map(el => {
+               let uniq = uniqid();
+               let imgurl = `./public/images/${uniq}.jpg`;
+               imgArr.push(`/images/${uniq}.jpg`)
+               fs.rename(el.path, imgurl, err=> err && console.error(err.message));
+            })
+            files.imgIcon.map(el => {
+               let uniq = uniqid();
+               let imgurl = `./public/images/iconImg/${uniq}.jpg`;
+               imgIconArr.push(`/images/iconImg/${uniq}.jpg`)
+               fs.rename(el.path, imgurl, err=> err && console.error(err.message));
+            })
+            const data = { ...fields, imgURL: imgArr[0], option: { img: [ ...imgArr ], iconImg: [ ...imgIconArr ] } }
             const newPorduct = await productModel.create(data);
+            
          }
-         n(data);
+        
        });
        res.send("created");
      
